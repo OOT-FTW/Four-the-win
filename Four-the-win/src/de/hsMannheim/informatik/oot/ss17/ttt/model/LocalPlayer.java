@@ -33,16 +33,16 @@ public class LocalPlayer implements Player {
 		Scanner scanner = new Scanner(System.in);
 		
 		GameTurn turn = null;
+		boolean fail;
 		
 		do {
 			correctInput = true;
+			fail = false;
 			
 			String value = scanner.nextLine();
 			
 			if(!value.matches("^[0-9]*$")) {
-				System.out.println("Die Eingabe hat ein ungültiges Format. Versuchen Sie es erneut.");
-				correctInput = false;
-				continue;
+				fail = true;
 			}
 			
 			int input = 0;
@@ -50,6 +50,10 @@ public class LocalPlayer implements Player {
 				input = Integer.parseInt(value);
 			}
 			catch(NumberFormatException e) {
+				fail = true;
+			}
+			
+			if(fail) {
 				System.out.println("Die Eingabe hat ein ungültiges Format. Versuchen Sie es erneut.");
 				correctInput = false;
 				continue;

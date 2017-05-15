@@ -17,5 +17,5 @@ public interface Player {
 	 * @param board The current board situation.
 	 * @return Returns the next turn that should be executed.
 	 */
-	public GameTurn getNextTurn(GameBoard board);
+	public GameTurn getNextTurn(GameBoard board) throws InvalidTurnException;
 }
