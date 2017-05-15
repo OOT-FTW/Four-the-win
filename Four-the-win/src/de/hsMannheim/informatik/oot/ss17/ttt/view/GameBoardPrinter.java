@@ -51,7 +51,7 @@ public class GameBoardPrinter {
 		System.out.println(); // End of line
 		
 		// Print upper column count
-		System.out.print("  + ");
+		System.out.print("  +  ");
 		for(int i = 1; i <= columns; i++) {
 			if(i < 10) {
 				System.out.print(" " + i + " ");
@@ -60,7 +60,7 @@ public class GameBoardPrinter {
 				System.out.print(i + " ");
 			}
 		}
-		System.out.print("+  ");
+		System.out.print( " +  ");
 		System.out.println(); // End of line
 		
 		// Print field
