@@ -85,8 +85,6 @@ public class GameBoard {
 	 * @throws InvalidTurnException Is thrown if the turn is not valid and could not be executed.
 	 */
 	public void insertToken(CompassDirection direction, int line, GameToken token) throws InvalidTurnException {
-		// TODO insertToken()
-		
 		if(direction == null) {
 			throw new InvalidTurnException("Invalid turn could not be executed.", direction, line);
 		}
@@ -96,16 +94,58 @@ public class GameBoard {
 		
 		line--;
 		if(direction.equals(CompassDirection.NORTH)) {
-			// TODO
+			int freeIndex = getRows() - 1;
+			for(int row = getRows() - 1; row >= 0; row--) {
+				if(!board[row][line].equals(GameToken.NONE)) {
+					board[freeIndex][line] = board[row][line];
+					if(freeIndex != row) {
+						board[row][line] = GameToken.NONE;
+					}
+					freeIndex--;
+				}
+			}
+			board[freeIndex][line] = token;
 		}
 		else if(direction.equals(CompassDirection.EAST)) {
-			// TODO
+			int freeIndex = 0;
+			for(int column = 0; column < getColumns(); column++) {
+				if(!board[line][column].equals(GameToken.NONE)) {
+					board[line][freeIndex] = board[line][column];
+					if(freeIndex != column) {
+						board[line][column] = GameToken.NONE;
+					}
+					freeIndex++;
+				}
+			}
+			board[line][freeIndex] = token;
 		}
 		else if(direction.equals(CompassDirection.SOUTH)) {
-			// TODO
+			int freeIndex = 0;
+			for(int row = 0; row < getRows(); row++) {
+				
+				if(!board[row][line].equals(GameToken.NONE)) {
+					board[freeIndex][line] = board[row][line];
+					if(freeIndex != row) {
+						board[row][line] = GameToken.NONE;
+					}
+					freeIndex++;
+				}
+			}
+			board[freeIndex][line] = token;
 		}
 		else if(direction.equals(CompassDirection.WEST)) {
-			// TODO
+			int freeIndex = getColumns() - 1;
+			for(int column = getColumns() - 1; column >= 0; column--) {
+				
+				if(!board[line][column].equals(GameToken.NONE)) {
+					board[line][freeIndex] = board[line][column];
+					if(freeIndex != column) {
+						board[line][column] = GameToken.NONE;
+					}
+					freeIndex--;
+				}
+			}
+			board[line][freeIndex] = token;
 		}
 	}
 	

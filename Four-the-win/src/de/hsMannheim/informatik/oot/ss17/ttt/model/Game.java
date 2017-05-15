@@ -5,7 +5,7 @@ import de.hsMannheim.informatik.oot.ss17.ttt.view.GameBoardPrinter;
 public class Game {
 	
 	private Player[] player;
-	private int currentPlayerID;
+	private int currentPlayerID = 0;
 	private GameBoardPrinter printer;
 	private GameBoard board;
 	
@@ -25,7 +25,12 @@ public class Game {
 		do {
 			printer.print();
 			
-			executeNextTurn();
+			try {
+				executeNextTurn();
+			} catch (InvalidTurnException e) {
+				System.out.println(e.getMessage());
+				gameEnded = true;
+			}
 			
 			GameResult status = computeGameResult();
 			if(!status.equals(GameResult.NONE)) {
@@ -40,11 +45,12 @@ public class Game {
 		} while(!gameEnded);
 	}
 	
-	private void executeNextTurn() {
-		GameTurn nextTurn = getCurrentPlayer().getNextTurn(board);
+	private void executeNextTurn() throws InvalidTurnException {
+		GameTurn nextTurn = null;
+		nextTurn = getCurrentPlayer().getNextTurn(board);
 		
 		GameToken token;
-		if(currentPlayerID == 1) {
+		if(currentPlayerID == 0) {
 			token = GameToken.FIRST_PLAYER;
 		}
 		else {
@@ -69,7 +75,197 @@ public class Game {
 	}
 	
 	private GameResult computeGameResult() {
-		// TODO computeGameResult()
+		final int tokensToWin = 4;
+		
+		boolean player1HasWon = false, player2HasWon = false;
+		GameToken previous;
+		int number;
+		
+		// Check rows
+		for(int row = 0; row < board.getRows(); row++) {
+			number = 1;
+			previous = null;
+			
+			for(int column = 0; column < board.getColumns(); column++) {
+				if(!board.getTokenAt(row, column).equals(previous)) {
+					number = 1;
+					previous = board.getTokenAt(row, column);
+				}
+				else {
+					if(board.getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(board.getTokenAt(row, column).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+			}
+		}
+		
+		// Check columns
+		for(int column = 0; column < board.getColumns(); column++) {
+			number = 1;
+			previous = null;
+			
+			for(int row = 0; row < board.getRows(); row++) {
+				if(!board.getTokenAt(row, column).equals(previous)) {
+					number = 1;
+					previous = board.getTokenAt(row, column);
+				}
+				else {
+					if(board.getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(board.getTokenAt(row, column).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+			}
+		}
+		
+		// Check diagonals
+		// \
+		System.out.println();
+		for(int row = 0; row < board.getRows(); row++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(row + counter < board.getRows() && counter < board.getColumns()) {
+				if(!board.getTokenAt(row + counter, counter).equals(previous)) {
+					number = 1;
+					previous = board.getTokenAt(row + counter, counter);
+				}
+				else {
+					if(board.getTokenAt(row + counter, counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(board.getTokenAt(row + counter, counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+		for(int column = 0; column < board.getColumns(); column++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(column + counter < board.getColumns() && counter < board.getRows()) {
+				if(!board.getTokenAt(counter, column + counter).equals(previous)) {
+					number = 1;
+					previous = board.getTokenAt(counter, column + counter);
+				}
+				else {
+					if(board.getTokenAt(counter, column + counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(board.getTokenAt(counter, column + counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+		
+		// /
+				System.out.println();
+				for(int row = 0; row < board.getRows(); row++) {
+					number = 1;
+					previous = null;
+					
+					int counter = 0;
+					while(row - counter >= 0 && counter < board.getColumns()) {
+						if(!board.getTokenAt(row - counter, counter).equals(previous)) {
+							number = 1;
+							previous = board.getTokenAt(row - counter, counter);
+						}
+						else {
+							if(board.getTokenAt(row - counter, counter).equals(GameToken.FIRST_PLAYER)) {
+								number++;
+								if(number >= tokensToWin) {
+									player1HasWon = true;
+								}
+							}
+							else if(board.getTokenAt(row - counter, counter).equals(GameToken.SECOND_PLAYER)) {
+								number++;
+								if(number >= tokensToWin) {
+									player2HasWon = true;
+								}
+							}
+						}
+						
+						counter++;
+					}
+				}
+				for(int column = 0; column < board.getColumns(); column++) {
+					number = 1;
+					previous = null;
+					
+					int counter = 0;
+					while(column + counter < board.getColumns() && board.getRows() - counter >= 0) {
+						if(!board.getTokenAt(board.getRows() - 1 - counter, column + counter).equals(previous)) {
+							number = 1;
+							previous = board.getTokenAt(board.getRows() - 1 - counter, column + counter);
+						}
+						else {
+							if(board.getTokenAt(board.getRows() - 1 - counter, column + counter).equals(GameToken.FIRST_PLAYER)) {
+								number++;
+								if(number >= tokensToWin) {
+									player1HasWon = true;
+								}
+							}
+							else if(board.getTokenAt(board.getRows() - 1 - counter, column + counter).equals(GameToken.SECOND_PLAYER)) {
+								number++;
+								if(number >= tokensToWin) {
+									player2HasWon = true;
+								}
+							}
+						}
+						
+						counter++;
+					}
+				}
+		
+		
+		// Check for a draw
+		if(player1HasWon && player2HasWon) {
+			return GameResult.DRAW;
+		}
+		else if(player1HasWon && !player2HasWon) {
+			return GameResult.FIRST_PLAYER_WON;
+		}
+		else if(!player1HasWon && player2HasWon) {
+			return GameResult.SECOND_PLAYER_WON;
+		}
+		
 		return GameResult.NONE;
 	}
 }
