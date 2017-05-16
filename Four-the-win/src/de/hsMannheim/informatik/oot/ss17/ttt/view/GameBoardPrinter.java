@@ -24,6 +24,7 @@ public class GameBoardPrinter {
 		if(board == null) {
 			// TODO log event
 			System.out.println("Field not initialized.");
+			return;
 		}		
 		
 		int columns = board.getColumns();
@@ -40,7 +41,7 @@ public class GameBoardPrinter {
 		
 		// Print north (N)
 		for(int i = 0; i < ((2 * offset) + columns) * 3; i++) {
-			if((i - offset) == (columns + 1 + columns / 2)) {
+			if((i - offset) == (columns + 2 + columns / 2)) {
 				System.out.print("N");
 			}
 			else {
@@ -51,7 +52,7 @@ public class GameBoardPrinter {
 		System.out.println(); // End of line
 		
 		// Print upper column count
-		System.out.print("  +  ");
+		System.out.print("  +   ");
 		for(int i = 1; i <= columns; i++) {
 			if(i < 10) {
 				System.out.print(" " + i + " ");
@@ -60,8 +61,9 @@ public class GameBoardPrinter {
 				System.out.print(i + " ");
 			}
 		}
-		System.out.print( " +  ");
+		System.out.print( "   +  ");
 		System.out.println(); // End of line
+		System.out.println();
 		
 		// Print field
 		for(int row = 0; row < rows; row++) {
@@ -72,7 +74,10 @@ public class GameBoardPrinter {
 				System.out.print("  ");
 			}
 			
-			System.out.print(((rows - row) + 2 * columns + rows) + " ");
+			// Left row number
+			System.out.print(((rows - row) + 2 * columns + rows) + "  ");
+			
+			// Tokens
 			for(int column = 0; column < columns; column++) {
 				System.out.print(" ");
 				if(board.getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
@@ -87,7 +92,10 @@ public class GameBoardPrinter {
 				System.out.print(" ");
 			}
 			
-			System.out.print(row + 1 + columns);
+			if((row + 1 + columns) < 10) {
+				System.out.print(" ");
+			}
+			System.out.print("  " + (row + 1 + columns)); // Print right row count
 			
 			if(row == (rows / 2)) {
 				System.out.print(" O");
@@ -96,12 +104,12 @@ public class GameBoardPrinter {
 				System.out.print("  ");
 			}
 
-			System.out.println();
 			System.out.println(); // End of line
+			System.out.println();	// Free line
 		}
 		
 		// Print lower column count
-		System.out.print("  + ");
+		System.out.print("  +   ");
 		for(int column = 1; column <= columns; column++) {
 			if(((columns - column) + columns + rows + 1) < 10) {
 				System.out.print(" " + ((columns - column) + columns + rows + 1) + " ");
@@ -110,7 +118,7 @@ public class GameBoardPrinter {
 				System.out.print(((columns - column) + columns + rows + 1) + " ");
 			}
 		}
-		System.out.print("+  ");
+		System.out.print("   +  ");
 		System.out.println(); // End of line
 		
 		// Print south (S)

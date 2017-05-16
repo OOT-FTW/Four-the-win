@@ -5,8 +5,14 @@ public class AIPlayer implements Player {
 	private String name;
 	private AIDifficultyLevel level;
 	
-	public AIPlayer(String name, AIDifficultyLevel level) {
-		this.name = name;
+	public AIPlayer(AIDifficultyLevel level) {
+		this.name = "Computer";
+		switch(level) {
+		case EASY:		this.name = "Leichter Computergegner"; break;
+		case NORMAL:	this.name = "Normaler Computergegner"; break;
+		case HARD:		this.name = "Schwerer Computergegner"; break;
+		}
+		
 		this.level = level;
 	}
 	

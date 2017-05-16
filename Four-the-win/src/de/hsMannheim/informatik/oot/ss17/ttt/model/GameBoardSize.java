@@ -6,27 +6,30 @@ package de.hsMannheim.informatik.oot.ss17.ttt.model;
  */
 public class GameBoardSize {
 
-	private int width, height;
+	private int columns, rows;
 	
-	public GameBoardSize(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public GameBoardSize(int rows, int columns){
+		if(Math.min(rows, columns) < 6 || Math.max(columns, rows) < 7) {
+			throw new IllegalArgumentException("Invalid board size: " + rows + "x" + columns);
+		}
+		this.columns = columns;
+		this.rows = rows;
 	}
 	
 	/**
 	 * Returns the width (number of columns) of the board
 	 * @return the number of columns
 	 */
-	public int getWidth() {
-		return width;
+	public int getColumns() {
+		return columns;
 	}
 	
 	/**
 	 * Returns the height (number of rows) of the board
 	 * @return the number of rows
 	 */
-	public int getHeight() {
-		return height;
+	public int getRows() {
+		return rows;
 	}
 	
 }
