@@ -9,9 +9,10 @@ public class GameBoardSize {
 	private int columns, rows;
 	
 	public GameBoardSize(int rows, int columns){
-		if(Math.min(rows, columns) < 6 || Math.max(columns, rows) < 7) {
+		if(Math.min(rows, columns) < 6 || Math.max(columns, rows) < 7 || Math.max(rows, columns) > 50) {
 			throw new IllegalArgumentException("Invalid board size: " + rows + "x" + columns);
 		}
+		
 		this.columns = columns;
 		this.rows = rows;
 	}
