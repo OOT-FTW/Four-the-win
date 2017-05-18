@@ -1,0 +1,23 @@
+Board Size: 7 6
+
+Player number: 1
+
+0 0 0 0 0 0 
+0 0 1 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 2 0 
+0 0 0 0 0 0 
+
+
+
+FTW - save file
+Board size: rows columns
+Player number: x
+	x = 1 => Player 1
+	x = 2 => Player 2
+Game tokens:
+	0 = empty
+	1 = Player 1
+	2 = Player2
