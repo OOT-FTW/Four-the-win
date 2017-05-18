@@ -6,29 +6,41 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hsMannheim.informatik.oot.ss17.ttt.model.CompassDirection;
+import de.hsMannheim.informatik.oot.ss17.ttt.model.GameTurn;
+
 public class GameTurnTest {
 
+	
+	GameTurn turnNORTH;
+	GameTurn turnSOUTH;
+	GameTurn turnEAST;
+	GameTurn turnWEST;
+	
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testGameTurn() {
-		fail("Not yet implemented");
+		 turnNORTH = new GameTurn(CompassDirection.NORTH,1);
+		 turnSOUTH = new GameTurn(CompassDirection.SOUTH,2);
+		 turnEAST = new GameTurn(CompassDirection.EAST,3);
+		 turnWEST = new GameTurn(CompassDirection.WEST,4);
+		 
 	}
 
 	@Test
 	public void testGetDirection() {
-		fail("Not yet implemented");
+		assertEquals(CompassDirection.NORTH,turnNORTH.getDirection());
+		assertEquals( CompassDirection.SOUTH, turnSOUTH.getDirection());
+		assertEquals( CompassDirection.EAST, turnEAST.getDirection());
+		assertEquals(CompassDirection.WEST, turnWEST.getDirection());
 	}
 
 	@Test
 	public void testGetLine() {
-		fail("Not yet implemented");
+		assertEquals(1, turnNORTH.getLine());
+		assertEquals(2, turnSOUTH.getLine());
+		assertEquals(3, turnEAST.getLine());
+		assertEquals(4, turnWEST.getLine());
 	}
 
 }
