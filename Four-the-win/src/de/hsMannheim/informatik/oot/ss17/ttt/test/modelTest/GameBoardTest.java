@@ -119,6 +119,7 @@ public class GameBoardTest {
 		assertEquals(2, small.getCurrentPlayerNumber());
 	}
 
+	
 	@Test
 	public void testContainsAnyNonNoneToken() {
 		//fail("Not yet implemented");
