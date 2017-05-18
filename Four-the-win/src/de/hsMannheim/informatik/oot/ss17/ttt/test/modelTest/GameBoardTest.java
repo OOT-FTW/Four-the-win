@@ -12,6 +12,7 @@ import org.junit.Test;
 
 public class GameBoardTest {
 
+	
 	@Before
 	public void setUp() throws Exception {
 	}
