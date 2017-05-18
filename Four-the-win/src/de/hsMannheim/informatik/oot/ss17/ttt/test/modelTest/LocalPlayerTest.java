@@ -6,29 +6,38 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hsMannheim.informatik.oot.ss17.ttt.model.GameBoard;
+import de.hsMannheim.informatik.oot.ss17.ttt.model.LocalPlayer;
+
 public class LocalPlayerTest {
 
+	LocalPlayer johannes;
+	LocalPlayer pascal;
+	LocalPlayer hohannes;
+	
+	GameBoard testBoard;
+	
+	
 	@Before
 	public void setUp() throws Exception {
+		LocalPlayer johannes = new LocalPlayer("Johannes");
+		LocalPlayer pascal = new LocalPlayer("Pascal");
+		LocalPlayer hohannes = new LocalPlayer("Hohannes");
+		
+		GameBoard testBoard = new GameBoard("ftw.txt");
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testLocalPlayer() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetName() {
-		fail("Not yet implemented");
+		assertEquals("Johannes", johannes.getName());
+		assertEquals("Pascal", pascal.getName());
+		assertEquals("Hohannes", hohannes.getName());
 	}
 
-	@Test
+	@Test(expected = Exception.class)
 	public void testGetNextTurn() {
-		fail("Not yet implemented");
+		
 	}
 
 }
