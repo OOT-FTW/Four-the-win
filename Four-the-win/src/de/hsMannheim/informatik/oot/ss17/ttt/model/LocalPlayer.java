@@ -26,22 +26,29 @@ public class LocalPlayer implements Player {
 	public GameTurn getNextTurn(GameBoard board) throws InvalidTurnException {
 		// Read next turn from console
 		Scanner scanner = new Scanner(System.in);
+		String userInput = scanner.nextLine();
 		
-		GameTurn turn = null;
-		
-		String value = scanner.nextLine();
-		
-		if(!value.matches("^[0-9]*$")) {
+		return checkInputAndCreateGameTurn(board, userInput);
+	}
+	
+	private GameTurn checkInputAndCreateGameTurn(GameBoard board, String userInput) throws InvalidTurnException {
+		if(!userInput.matches("^[0-9]*$")) {
 			throw new InvalidTurnException("Die Eingabe hat ein ungültiges Format.");
 		}
 		
 		int input = 0;
 		try {
-			input = Integer.parseInt(value);
+			input = Integer.parseInt(userInput);
 		}
 		catch(NumberFormatException e) {
 			throw new InvalidTurnException("Die Eingabe hat ein ungültiges Format.");
 		}
+		
+		return createGameTurn(board, input);
+	}
+	
+	private GameTurn createGameTurn(GameBoard board, int input) throws InvalidTurnException {
+		GameTurn turn;
 		
 		if(input > 0 && input <= board.getColumns()) {
 			turn = new GameTurn(CompassDirection.NORTH, input);
