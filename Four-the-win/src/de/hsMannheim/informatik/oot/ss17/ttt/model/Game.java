@@ -26,11 +26,16 @@ public class Game {
 		do {
 			printer.print();
 			
-			try {
-				executeNextTurn();
-			} catch (InvalidTurnException e) {
-				System.out.println(e.getMessage());
-				gameEnded = true;
+			boolean validInput = false;
+			System.out.println("Spieler \"" + getCurrentPlayer().getName() + "\" ist am Zug."
+					+ " Geben Sie dazu die Nummer des Feldes an, in das eingeworfen werden soll.");
+			while(!validInput) {
+				try {
+					executeNextTurn();
+					validInput= true;
+				} catch (InvalidTurnException e) {
+					System.out.println(e.getMessage() + " Versuchen Sie es erneut.");
+				}
 			}
 			
 			GameResult status = computeGameResult();
@@ -47,8 +52,7 @@ public class Game {
 	}
 	
 	private void executeNextTurn() throws InvalidTurnException {
-		GameTurn nextTurn = null;
-		nextTurn = getCurrentPlayer().getNextTurn(board);
+		GameTurn nextTurn = getCurrentPlayer().getNextTurn(board);
 		
 		GameToken token;
 		if(currentPlayerID == 0) {

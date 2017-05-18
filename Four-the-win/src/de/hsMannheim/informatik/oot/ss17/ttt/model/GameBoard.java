@@ -253,6 +253,15 @@ public class GameBoard {
 	}
 	
 	/**
+	 * Returns if a game turn is valid in the current situation of the board.
+	 * @param turn The game turn to check.
+	 * @return true = turn valid, false = turn not valid.
+	 */
+	public boolean canInsert(GameTurn turn) {
+		return canInsert(turn.getDirection(), turn.getLine());
+	}
+	
+	/**
 	 * Inserts a new piece at the board in the specified way.
 	 * @param direction The direction the piece should be inserted.
 	 * @param line The line in which should be inserted.
@@ -358,6 +367,10 @@ public class GameBoard {
 		return currentPlayerNumber;
 	}
 
+	/**
+	 * Returns if any token is set on the current board.
+	 * @return true = there is a token set, false = all fields on the board are free.
+	 */
 	public boolean containsAnyNonNoneToken() {
 		boolean nonNone = false;
 		for(int row = 0; row < getRows(); row++) {
@@ -370,7 +383,12 @@ public class GameBoard {
 		
 		return nonNone;
 	}
-		
+	
+	/**
+	 * Returns if all fields of the board are filled with a player token and there are
+	 * no free places to insert another token.
+	 * @return true = board is full, false = board is not full.
+	 */
 	public boolean isFull() {
 		boolean boardFull = true;
 		for(int row = 0; row < getRows(); row++) {

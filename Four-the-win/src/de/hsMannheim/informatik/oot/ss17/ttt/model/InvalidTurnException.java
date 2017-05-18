@@ -11,6 +11,11 @@ public class InvalidTurnException extends Exception {
 		this.line = line;
 	}
 	
+	public InvalidTurnException(String message) {
+		super(message);
+		this.line = -1;
+	}
+	
 	/**
 	 * Returns the direction of the invalid turn.
 	 * @return direction

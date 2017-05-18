@@ -23,69 +23,55 @@ public class LocalPlayer implements Player {
 	}
 
 	@Override
-	public GameTurn getNextTurn(GameBoard board) {
+	public GameTurn getNextTurn(GameBoard board) throws InvalidTurnException {
 		// Read next turn from console
-		
-		System.out.println("Spieler \"" + name + "\" ist am Zug. Geben Sie dazu die Nummer des Feldes an, in das eingeworfen werden soll.");
-		
-		boolean correctInput;
-		
 		Scanner scanner = new Scanner(System.in);
+		String userInput = scanner.nextLine();
 		
-		GameTurn turn = null;
-		boolean fail;
-		
-		do {
-			correctInput = true;
-			fail = false;
-			
-			String value = scanner.nextLine();
-			
-			if(!value.matches("^[0-9]*$")) {
-				fail = true;
-			}
-			
-			int input = 0;
-			try {
-				input = Integer.parseInt(value);
-			}
-			catch(NumberFormatException e) {
-				fail = true;
-			}
-			
-			if(fail) {
-				System.out.println("Die Eingabe hat ein ungültiges Format. Versuchen Sie es erneut.");
-				correctInput = false;
-				continue;
-			}
-
-			
-			if(input > 0 && input <= board.getColumns()) {
-				turn =  new GameTurn(CompassDirection.NORTH, input);
-			}
-			else if(input > board.getColumns() && input <= board.getColumns() + board.getRows()) {
-				turn = new GameTurn(CompassDirection.EAST, input - board.getColumns());
-			}
-			else if(input > board.getColumns() + board.getRows() && input <= 2 * board.getColumns() + board.getRows()) {
-				turn = new GameTurn(CompassDirection.SOUTH, board.getColumns() - (input - board.getColumns() - board.getRows()) + 1);
-			}
-			else if(input > 2 * board.getColumns() + board.getRows() && input <= 2 * board.getColumns() + 2 * board.getRows()) {
-				turn = new GameTurn(CompassDirection.WEST, board.getRows() - (input - 2 * board.getColumns() - board.getRows()) + 1);
-			}
-			else {
-				System.out.println("Die Eingabe ist ungültig. Sie muss zwischen 1 und " + (2 * board.getColumns() + 2 * board.getRows()) + " (inklusive) liegen. Versuchen Sie es erneut.");
-				correctInput = false;
-				continue;
-			}
-
-			if(turn == null || !board.canInsert(turn.getDirection(), turn.getLine())) {
-				System.out.println("Die Eingabe ist ungültig, da der Stein an dieser Stelle nicht eingefügt werden kann. Versuchen Sie es erneut.");
-				correctInput = false;
-				continue;
-			}
-		} while(!correctInput);
-		
-		return turn;
+		return checkInputAndCreateGameTurn(board, userInput);
 	}
+	
+	private GameTurn checkInputAndCreateGameTurn(GameBoard board, String userInput) throws InvalidTurnException {
+		if(!userInput.matches("^[0-9]*$")) {
+			throw new InvalidTurnException("Die Eingabe hat ein ungültiges Format.");
+		}
+		
+		int input = 0;
+		try {
+			input = Integer.parseInt(userInput);
+		}
+		catch(NumberFormatException e) {
+			throw new InvalidTurnException("Die Eingabe hat ein ungültiges Format.");
+		}
+		
+		return createGameTurn(board, input);
+	}
+	
+	private GameTurn createGameTurn(GameBoard board, int input) throws InvalidTurnException {
+		GameTurn turn;
+		
+		if(input > 0 && input <= board.getColumns()) {
+			turn = new GameTurn(CompassDirection.NORTH, input);
+		}
+		else if(input > board.getColumns() && input <= board.getColumns() + board.getRows()) {
+			turn = new GameTurn(CompassDirection.EAST, input - board.getColumns());
+		}
+		else if(input > board.getColumns() + board.getRows() && input <= 2 * board.getColumns() + board.getRows()) {
+			turn = new GameTurn(CompassDirection.SOUTH, board.getColumns() - (input - board.getColumns() - board.getRows()) + 1);
+		}
+		else if(input > 2 * board.getColumns() + board.getRows() && input <= 2 * board.getColumns() + 2 * board.getRows()) {
+			turn = new GameTurn(CompassDirection.WEST, board.getRows() - (input - 2 * board.getColumns() - board.getRows()) + 1);
+		}
+		else {
+			throw new InvalidTurnException("Die Eingabe ist ungültig. Sie muss zwischen 1 und " + (2 * board.getColumns() + 2 * board.getRows()) + " (inklusive) liegen.");
+		}
 
+		if(turn == null || !board.canInsert(turn.getDirection(), turn.getLine())) {
+			throw new InvalidTurnException("Die Eingabe ist ungültig, da der Stein an dieser Stelle nicht eingefügt werden kann.");
+		}
+		else {
+			return turn;
+		}
+	}
+	
 }
