@@ -8,7 +8,7 @@ public class StarterSimple {
 	public static void main(String[] args) {
 		System.out.println("FOUR THE WIN TEST");
 		
-		final int rows = 7, columns = 6;
+		final int rows = 50, columns = 50;
 		startWithSize(rows, columns);	// Alternative 1
 		
 //		startWithFile("ftw.txt");	// Alternative 2
