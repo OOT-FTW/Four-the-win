@@ -2,12 +2,10 @@ package de.hsMannheim.informatik.oot.ss17.ttt.test.modelTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.hsMannheim.informatik.oot.ss17.ttt.model.GameBoard;
-import de.hsMannheim.informatik.oot.ss17.ttt.model.LocalPlayer;
+import de.hsMannheim.informatik.oot.ss17.ttt.model.*;
 
 public class LocalPlayerTest {
 
@@ -15,18 +13,18 @@ public class LocalPlayerTest {
 	LocalPlayer pascal;
 	LocalPlayer hohannes;
 	
-	GameBoard testBoard;
+	GameBoard board;
 	
 	
 	@Before
 	public void setUp() throws Exception {
-		LocalPlayer johannes = new LocalPlayer("Johannes");
-		LocalPlayer pascal = new LocalPlayer("Pascal");
-		LocalPlayer hohannes = new LocalPlayer("Hohannes");
+		 johannes = new LocalPlayer("Johannes");
+		 pascal = new LocalPlayer("Pascal");
+		 hohannes = new LocalPlayer("Hohannes");
 		
-		GameBoard testBoard = new GameBoard("ftw.txt");
+		 board = new GameBoard("gameBoardTest.txt");
 	}
-
+	
 
 	@Test
 	public void testGetName() {
@@ -35,9 +33,23 @@ public class LocalPlayerTest {
 		assertEquals("Hohannes", hohannes.getName());
 	}
 
-	@Test(expected = Exception.class)
-	public void testGetNextTurn() {
-		
+
+	
+	@Test(expected = InvalidTurnException.class)
+	public void testCheckInputAndCreateGameTurnFalse() throws InvalidTurnException {
+		johannes.checkInputAndCreateGameTurn(board, "1");
+		johannes.checkInputAndCreateGameTurn(board, "1");
 	}
+
+	
+	
+
+	
+	
+	@Test(expected = InvalidTurnException.class)
+	public void testCreateGameTurn() throws InvalidTurnException {
+		johannes.checkInputAndCreateGameTurn(board, "1");
+	}
+	
 
 }

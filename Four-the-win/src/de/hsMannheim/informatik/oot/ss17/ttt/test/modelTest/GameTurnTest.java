@@ -1,3 +1,7 @@
+/**
+ * @autor Pascal Egner
+ */
+
 package de.hsMannheim.informatik.oot.ss17.ttt.test.modelTest;
 
 import static org.junit.Assert.*;
