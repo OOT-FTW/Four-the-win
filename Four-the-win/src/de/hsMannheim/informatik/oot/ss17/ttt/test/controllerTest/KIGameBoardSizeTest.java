@@ -43,22 +43,22 @@ public class KIGameBoardSizeTest {
 	 * @param testGameBoard
 	 */
 	public static void simulateThreeDifficultKiTurn(GameBoard testGameBoard){
-		simulateThreeDifficultKiTurn(testGameBoard, 0);
+		simulateThreeDifficultKiTurn(testGameBoard, 0, 4);
 	}
 	
-	public static void simulateThreeDifficultKiTurn(GameBoard testGameBoard, int counter){
+	public static void simulateThreeDifficultKiTurn(GameBoard testGameBoard, int counter, int ordnung){
 		//NORTH
 		for(int spalte = 1; spalte <= testGameBoard.getColumns(); spalte++){
 			if(testGameBoard.canInsert(CompassDirection.NORTH, spalte)){
 				for(int zeile = 1; zeile <= testGameBoard.getRows(); zeile++){
 					testGameBoard.getTokenAt(zeile-1, spalte-1);
-					if(counter == 5){
+					if(counter == ordnung-1){
 						simulateBoardRating(testGameBoard);
 					}
 				}
 			}
-			if(counter < 6){
-				simulateThreeDifficultKiTurn(testGameBoard, counter + 1);
+			if(counter < ordnung){
+				simulateThreeDifficultKiTurn(testGameBoard, counter + 1, ordnung);
 			}	
 		}	
 		//EAST
@@ -66,13 +66,13 @@ public class KIGameBoardSizeTest {
 			if(testGameBoard.canInsert(CompassDirection.EAST, zeile)){
 				for(int spalte = 1; spalte <= testGameBoard.getColumns(); spalte++){
 					testGameBoard.getTokenAt(zeile-1, spalte-1);
-					if(counter == 5){
+					if(counter == ordnung-1){
 						simulateBoardRating(testGameBoard);
 					}
 				}
 			}
-			if(counter < 6){
-				simulateThreeDifficultKiTurn(testGameBoard, counter + 1);
+			if(counter < ordnung){
+				simulateThreeDifficultKiTurn(testGameBoard, counter + 1, ordnung);
 			}	
 		}
 		//South
@@ -80,13 +80,13 @@ public class KIGameBoardSizeTest {
 					if(testGameBoard.canInsert(CompassDirection.SOUTH, spalte)){
 						for(int zeile = 1; zeile <= testGameBoard.getRows(); zeile++){
 							testGameBoard.getTokenAt(zeile-1, spalte-1);
-							if(counter == 5){
+							if(counter == ordnung-1){
 								simulateBoardRating(testGameBoard);
 							}
 						}
 					}
-					if(counter < 6){
-						simulateThreeDifficultKiTurn(testGameBoard, counter + 1);
+					if(counter < ordnung){
+						simulateThreeDifficultKiTurn(testGameBoard, counter + 1, ordnung);
 					}	
 				}	
 		//West
@@ -94,13 +94,13 @@ public class KIGameBoardSizeTest {
 			if(testGameBoard.canInsert(CompassDirection.WEST, zeile)){
 				for(int spalte = 1; spalte <= testGameBoard.getColumns(); spalte++){
 					testGameBoard.getTokenAt(zeile-1, spalte-1);
-					if(counter == 5){
+					if(counter == ordnung-1){
 						simulateBoardRating(testGameBoard);
 					}
 				}
 			}
-			if(counter < 6){
-				simulateThreeDifficultKiTurn(testGameBoard, counter + 1);
+			if(counter < ordnung){
+				simulateThreeDifficultKiTurn(testGameBoard, counter + 1, ordnung);
 			}	
 		}
 		
