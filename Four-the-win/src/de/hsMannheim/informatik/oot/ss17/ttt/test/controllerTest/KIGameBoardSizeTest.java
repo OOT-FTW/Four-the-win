@@ -6,9 +6,9 @@ public class KIGameBoardSizeTest {
 	public static void main(String[] args) {
 		System.out.println("FOUR THE WIN TEST");
 		
-		final int bigRows = 50, bigColumns = 50;
-		final int midRows = 25, midColumns = 25;
-		final int smallRows = 11, smallCloumns = 13;
+		final int bigRows = 11, bigColumns = 13;
+		final int midRows = 9, midColumns = 11;
+		final int smallRows = 6, smallCloumns = 7;
 		
 		GameBoard bigGame = new GameBoard(new GameBoardSize(bigRows, bigColumns));
 		GameBoard midGame = new GameBoard(new GameBoardSize(midRows, midColumns));
@@ -31,7 +31,6 @@ public class KIGameBoardSizeTest {
 		simulateThreeDifficultKiTurn(bigGame);
 		time = System.currentTimeMillis()-time;
 		System.out.println("FINISHED BIG GAME in: " + ((int)(time/1000)) + " seconds");
-		
 	}
 	
 	/**
@@ -43,7 +42,7 @@ public class KIGameBoardSizeTest {
 	 * @param testGameBoard
 	 */
 	public static void simulateThreeDifficultKiTurn(GameBoard testGameBoard){
-		simulateThreeDifficultKiTurn(testGameBoard, 0, 4);
+		simulateThreeDifficultKiTurn(testGameBoard, 0, 6);
 	}
 	
 	public static void simulateThreeDifficultKiTurn(GameBoard testGameBoard, int counter, int ordnung){

@@ -24,10 +24,28 @@ public class GameBoardTest {
 	GameBoard load;
 	
 	@Before
-	public void setUp() throws IllegalArgumentException, InvalidBoardException {
+	public void setUp() throws IllegalArgumentException, InvalidBoardException, InvalidTurnException {
 		small = new GameBoard(new GameBoardSize(LOWESTROW,LOWESTCOLUMN));
 		big = new GameBoard(new GameBoardSize(BIGGESTROW,BIGGESTCOLUMN));
 		load = new GameBoard("ftw.txt");
+		
+		for(int row = 0; row < small.getRows(); row++){
+			if(row%2 == 0){
+				small.insertToken(CompassDirection.NORTH, 2, GameToken.FIRST_PLAYER);
+			}
+			else{
+				small.insertToken(CompassDirection.NORTH, 2, GameToken.SECOND_PLAYER);
+			}
+		}
+		
+		for(int columns = 0; columns < big.getColumns(); columns++){
+			if(columns %2 == 0){
+				big.insertToken(CompassDirection.EAST, 3, GameToken.FIRST_PLAYER);
+			}
+			else{
+				big.insertToken(CompassDirection.EAST, 3, GameToken.SECOND_PLAYER);
+			}
+		}
 	}
 
 	@Test(expected = InvalidBoardException.class)
@@ -46,40 +64,69 @@ public class GameBoardTest {
 		assertTrue(big.canInsert(CompassDirection.SOUTH, BIGGESTCOLUMN));
 		assertTrue(big.canInsert(CompassDirection.WEST, BIGGESTROW));
 	}
+	
+	public void testCanInsertFalse1(){
+		assertFalse(small.canInsert(CompassDirection.NORTH, 2));
+	}
 
-	@Test
-	public void testInsertToken() {
-		fail("Not yet implemented");
+	public void testCanInsertFalse2(){
+		assertFalse(small.canInsert(CompassDirection.SOUTH, 2));
+	}
+	
+	public void testCanInsertFalse3(){
+		assertFalse(big.canInsert(CompassDirection.EAST, 3));
+	}
+
+	public void testCanInsertFalse4(){
+		assertFalse(big.canInsert(CompassDirection.WEST, 3));
+	}
+	
+	
+
+	@Test(expected = InvalidTurnException.class)
+	public void testInsertToken1() throws InvalidTurnException{
+		small.insertToken(CompassDirection.NORTH, 2, GameToken.FIRST_PLAYER);
+	}
+	
+	@Test(expected = InvalidTurnException.class)
+	public void testInsertToken2() throws InvalidTurnException{
+		big.insertToken(CompassDirection.EAST, 3, GameToken.FIRST_PLAYER);
 	}
 
 	@Test
 	public void testGetTokenAt() {
-		fail("Not yet implemented");
+		assertEquals(GameToken.FIRST_PLAYER, small.getTokenAt(small.getRows() -1, 1));
+		assertEquals(GameToken.SECOND_PLAYER, big.getTokenAt(2, BIGGESTCOLUMN -1));	
 	}
 
 	@Test
 	public void testGetRows() {
-		fail("Not yet implemented");
+		assertEquals(LOWESTROW, small.getRows());
+		assertEquals(BIGGESTROW, big.getRows());
 	}
 
 	@Test
 	public void testGetColumns() {
-		fail("Not yet implemented");
+		assertEquals(LOWESTCOLUMN, small.getColumns());
+		assertEquals(BIGGESTCOLUMN, big.getColumns());
 	}
 
 	@Test
-	public void testGetCurrentPlayerNumber() {
-		fail("Not yet implemented");
+	public void testGetCurrentPlayerNumber() throws InvalidTurnException {
+		assertEquals(1, big.getCurrentPlayerNumber());
+		assertEquals(1, small.getCurrentPlayerNumber());
+		small.insertToken(CompassDirection.WEST, 3, GameToken.FIRST_PLAYER);
+		assertEquals(2, small.getCurrentPlayerNumber());
 	}
 
 	@Test
 	public void testContainsAnyNonNoneToken() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testIsFull() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }
