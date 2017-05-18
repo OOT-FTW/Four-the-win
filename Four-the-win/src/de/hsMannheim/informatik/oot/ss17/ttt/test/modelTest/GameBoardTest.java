@@ -14,13 +14,15 @@ import de.hsMannheim.informatik.oot.ss17.ttt.model.*;
 
 public class GameBoardTest {
 	
-	public static final int LOWESTCOLUMN = 7;
-	public static final int LOWESTROW = 6;
+	public static final int LOWESTCOLUMN = 6;
+	public static final int LOWESTROW = 7;
 	public static final int BIGGESTCOLUMN = 50;
 	public static final int BIGGESTROW = 50;
 
 	GameBoard small;
 	GameBoard big;
+	GameBoard empty;
+	GameBoard full;
 	GameBoard load;
 	
 	@Before
@@ -28,6 +30,20 @@ public class GameBoardTest {
 		small = new GameBoard(new GameBoardSize(LOWESTROW,LOWESTCOLUMN));
 		big = new GameBoard(new GameBoardSize(BIGGESTROW,BIGGESTCOLUMN));
 		load = new GameBoard("ftw.txt");
+		full = new GameBoard(new GameBoardSize(LOWESTROW, LOWESTCOLUMN));
+		empty = new GameBoard(new GameBoardSize(BIGGESTROW, BIGGESTCOLUMN));
+		
+		for (int i = 1; i<= full.getColumns(); i++){
+			for(int j = 0; j< full.getRows(); j++){
+				if((i+j)%2 == 0){
+					full.insertToken(CompassDirection.NORTH, i, GameToken.FIRST_PLAYER);
+				}
+				else{
+
+					full.insertToken(CompassDirection.NORTH, i, GameToken.SECOND_PLAYER);
+				}
+			}
+		}
 		
 		for(int row = 0; row < small.getRows(); row++){
 			if(row%2 == 0){
@@ -122,12 +138,15 @@ public class GameBoardTest {
 	
 	@Test
 	public void testContainsAnyNonNoneToken() {
-		//fail("Not yet implemented");
+		assertFalse(empty.containsAnyNonNoneToken());
+		assertTrue(full.containsAnyNonNoneToken());
 	}
 
 	@Test
 	public void testIsFull() {
-		//fail("Not yet implemented");
+		assertTrue(full.containsAnyNonNoneToken());
+		assertFalse(empty.containsAnyNonNoneToken());
+		
 	}
 
 }

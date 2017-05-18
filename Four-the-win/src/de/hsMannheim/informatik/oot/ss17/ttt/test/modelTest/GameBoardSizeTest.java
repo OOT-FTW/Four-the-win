@@ -14,8 +14,8 @@ import de.hsMannheim.informatik.oot.ss17.ttt.model.GameBoardSize;
 
 public class GameBoardSizeTest {
 
-	public static final int LOWESTCOLUMN = 7;
-	public static final int LOWESTROW = 6;
+	public static final int LOWESTCOLUMN = 6;
+	public static final int LOWESTROW = 7;
 	public static final int BIGGESTCOLUMN = 50;
 	public static final int BIGGESTROW = 50;
 	
