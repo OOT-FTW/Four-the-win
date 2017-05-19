@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hsMannheim.informatik.oot.ss17.ttt.model.*;
+
 public class GameTest {
 
 	@Before
@@ -29,5 +31,4 @@ public class GameTest {
 	public void testPlay() {
 		fail("Not yet implemented");
 	}
-
 }
