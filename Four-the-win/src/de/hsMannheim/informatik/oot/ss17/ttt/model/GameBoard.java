@@ -9,8 +9,8 @@ public class GameBoard {
 
 	private GameToken[][] board;
 	private GameBoardSize size;
-	private GameToken currentPlayer;
-	private int currentPlayerNumber = 1;
+//	private GameToken currentPlayer;
+	private int startPlayerNumber = 1;
 	
 	/**
 	 * Creates a new GameBoard with a specified size.
@@ -79,10 +79,10 @@ public class GameBoard {
 			}
 
 			if(value.equals("1")) {
-				currentPlayerNumber = 1;
+				startPlayerNumber = 1;
 			}
 			else if(value.equals("2")) {
-				currentPlayerNumber = 2;
+				startPlayerNumber = 2;
 			}
 			else {
 				throw new InvalidBoardException("An error occured while reading the file. The file might be corrupted. Invalid player numer.");
@@ -363,8 +363,8 @@ public class GameBoard {
 		return size.getColumns();
 	}
 	
-	public int getCurrentPlayerNumber() {
-		return currentPlayerNumber;
+	public int getStartPlayerNumber() {
+		return startPlayerNumber;
 	}
 
 	/**
@@ -401,5 +401,201 @@ public class GameBoard {
 		
 		return boardFull;
 	}
-
+	
+	public GameResult computeGameResult() {
+		final int tokensToWin = 4;
+		
+		boolean player1HasWon = false, player2HasWon = false;
+		GameToken previous;
+		int number;
+		
+		// Check rows
+		for(int row = 0; row < getRows(); row++) {
+			number = 1;
+			previous = null;
+			
+			for(int column = 0; column < getColumns(); column++) {
+				if(!getTokenAt(row, column).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(row, column);
+				}
+				else {
+					if(getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(row, column).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+			}
+		}
+		
+		// Check columns
+		for(int column = 0; column < getColumns(); column++) {
+			number = 1;
+			previous = null;
+			
+			for(int row = 0; row < getRows(); row++) {
+				if(!getTokenAt(row, column).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(row, column);
+				}
+				else {
+					if(getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(row, column).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+			}
+		}
+		
+		// Check diagonals
+		// \
+		for(int row = 0; row < getRows(); row++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(row + counter < getRows() && counter < getColumns()) {
+				if(!getTokenAt(row + counter, counter).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(row + counter, counter);
+				}
+				else {
+					if(getTokenAt(row + counter, counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(row + counter, counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+		for(int column = 0; column < getColumns(); column++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(column + counter < getColumns() && counter < getRows()) {
+				if(!getTokenAt(counter, column + counter).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(counter, column + counter);
+				}
+				else {
+					if(getTokenAt(counter, column + counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(counter, column + counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+		
+		
+		for(int row = 0; row < getRows(); row++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(row - counter >= 0 && counter < getColumns()) {
+				if(!getTokenAt(row - counter, counter).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(row - counter, counter);
+				}
+				else {
+					if(getTokenAt(row - counter, counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(row - counter, counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+		for(int column = 0; column < getColumns(); column++) {
+			number = 1;
+			previous = null;
+			
+			int counter = 0;
+			while(column + counter < getColumns() && getRows() - 1 - counter >= 0) { // TODO -1?
+				if(!getTokenAt(getRows() - 1 - counter, column + counter).equals(previous)) {
+					number = 1;
+					previous = getTokenAt(getRows() - 1 - counter, column + counter);
+				}
+				else {
+					if(getTokenAt(getRows() - 1 - counter, column + counter).equals(GameToken.FIRST_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player1HasWon = true;
+						}
+					}
+					else if(getTokenAt(getRows() - 1 - counter, column + counter).equals(GameToken.SECOND_PLAYER)) {
+						number++;
+						if(number >= tokensToWin) {
+							player2HasWon = true;
+						}
+					}
+				}
+				
+				counter++;
+			}
+		}
+			
+		// Check for a draw
+		if(player1HasWon && player2HasWon) {
+			return GameResult.DRAW;
+		}
+		else if(player1HasWon && !player2HasWon) {
+			return GameResult.FIRST_PLAYER_WON;
+		}
+		else if(!player1HasWon && player2HasWon) {
+			return GameResult.SECOND_PLAYER_WON;
+		}
+		
+		if(isFull()) {
+			return GameResult.DRAW;
+		}
+		
+		return GameResult.NONE;
+	}
+	
 }
