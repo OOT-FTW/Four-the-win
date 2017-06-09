@@ -27,8 +27,14 @@ public class Game {
 			printer.print();
 			
 			boolean validInput = false;
-			System.out.println("Spieler \"" + getCurrentPlayer().getName() + "\" ist am Zug."
-					+ " Geben Sie dazu die Nummer des Feldes an, in das eingeworfen werden soll.");
+			System.out.println("Spieler \"" + getCurrentPlayer().getName() + "\" ist am Zug.");
+			if(getCurrentPlayer() instanceof AIPlayerHard) {
+				System.out.println(" Bitte auf den Zug des Computers warten.");
+			}
+			else {
+				System.out.println(" Geben Sie dazu die Nummer des Feldes an, in das eingeworfen werden soll.");
+			}
+			
 			while(!validInput) {
 				try {
 					executeNextTurn();
