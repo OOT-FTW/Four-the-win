@@ -40,7 +40,7 @@ public class TurnierTeamTTT {
 	};
 
 	//Implementiere KIs
-	private static Engine team1Ki = new MinzMazeEngine();
+	private static Engine team1Ki = new TTTEngine(); //TODO change to enemy engine
 	private static Engine team2Ki = new TTTEngine();
 	//Diese KI gibt das Board aus, dass es einheitlich bleibt
 	private static Engine printOnlyThisBoardWhilePlaying = team1Ki;

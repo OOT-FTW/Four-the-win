@@ -72,7 +72,11 @@ public class TTTEngine implements Engine {
 		GameTurn gameTurn = new GameTurn(gameSize, field);
 		
 		if(gameBoard.canInsert(gameTurn)) {
-			gameBoard.insertToken(gameTurn, tokenEnemy);
+			try {
+				gameBoard.insertToken(gameTurn, tokenEnemy);
+			} catch (InvalidTurnException e) {
+				e.printStackTrace();
+			}
 			return true;
 		} else {
 			return false;
