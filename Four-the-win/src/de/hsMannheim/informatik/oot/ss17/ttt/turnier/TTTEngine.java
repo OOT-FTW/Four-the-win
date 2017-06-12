@@ -18,8 +18,8 @@ public class TTTEngine implements Engine {
 	private GameBoardSize gameSize;
 	private GameBoardPrinter printer;
 	
-	private final GameToken tokenEnemy = GameToken.SECOND_PLAYER;
-	private final GameToken tokenMe = GameToken.FIRST_PLAYER;
+	private GameToken tokenEnemy = GameToken.SECOND_PLAYER;
+	private GameToken tokenMe = GameToken.FIRST_PLAYER;
 	
 	public TTTEngine() {
 		gameSize = new GameBoardSize(10,10);
@@ -48,10 +48,17 @@ public class TTTEngine implements Engine {
 
 	@Override
 	public void setFirst(boolean isFirst) {
+		if(isFirst) {
+			tokenMe = GameToken.SECOND_PLAYER;
+			tokenEnemy = GameToken.FIRST_PLAYER;
+		} else {
+			tokenEnemy = GameToken.SECOND_PLAYER;
+			tokenMe = GameToken.FIRST_PLAYER;
+		}
+		
 		//Reset engine
 		gameBoard = new GameBoard(gameSize);
 		printer = new GameBoardPrinter(gameBoard);
-		System.out.println("Set First called");
 	}
 
 	@Override
