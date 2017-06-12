@@ -23,10 +23,7 @@ public class TTTEngine implements Engine {
 	
 	public TTTEngine() {
 		gameSize = new GameBoardSize(10,10);
-		gameBoard = new GameBoard(gameSize);
 		tttPlayer = new AIPlayerHard(2, "TTT-KI");
-		
-		printer = new GameBoardPrinter(gameBoard);
 	}
 	
 	@Override
@@ -51,7 +48,10 @@ public class TTTEngine implements Engine {
 
 	@Override
 	public void setFirst(boolean isFirst) {
-		
+		//Reset engine
+		gameBoard = new GameBoard(gameSize);
+		printer = new GameBoardPrinter(gameBoard);
+		System.out.println("Set First called");
 	}
 
 	@Override
