@@ -26,6 +26,7 @@ public class HardAIThread extends Thread {
 	 */
 	public HardAIThread(int index, AIPlayerHard player, GameBoard board,
 						GameToken playerToken, int maxLevel, GameTurn initialTurn) {
+		this.setPriority(MAX_PRIORITY);
 		this.index = index;
 		this.ai = player;
 
