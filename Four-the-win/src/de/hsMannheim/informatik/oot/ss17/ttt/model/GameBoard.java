@@ -333,6 +333,10 @@ public class GameBoard {
 		}
 	}
 	
+	public void insertToken(GameTurn turn, GameToken token) throws InvalidTurnException {
+		insertToken(turn.getDirection(), turn.getLine(), token);
+	}
+	
 	/**
 	 * Returns the game token, representing the game piece of a specific player, at a given position.
 	 * @param row The row the piece is in.

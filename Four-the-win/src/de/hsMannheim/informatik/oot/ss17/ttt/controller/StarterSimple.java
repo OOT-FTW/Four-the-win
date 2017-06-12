@@ -17,7 +17,7 @@ public class StarterSimple {
 	
 	private static void startWithSize(int rows, int columns) {
 		try {
-			new Game(new LocalPlayer("Player1"), new LocalPlayer("Player2"), new GameBoard(new GameBoardSize(rows, columns))).play();
+			new Game(new LocalPlayer("Player1"), new AIPlayerHard(2, "KI"), new GameBoard(new GameBoardSize(rows, columns))).play();
 		}
 		catch(IllegalArgumentException e) {
 			System.out.println("Die Spielfeldgröße ist nicht gültig.");
