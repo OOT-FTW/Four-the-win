@@ -9,6 +9,7 @@ import de.hsMannheim.informatik.oot.ss17.ttt.model.GameTurn;
 import de.hsMannheim.informatik.oot.ss17.ttt.model.InvalidTurnException;
 import de.hsMannheim.informatik.oot.ss17.ttt.model.Player;
 import de.hsMannheim.informatik.oot.ss17.ttt.view.GameBoardPrinter;
+
 import ftw.turnier.Engine;
 
 public class TTTEngine implements Engine {
@@ -42,14 +43,14 @@ public class TTTEngine implements Engine {
 			return 0;
 		} else if(result == GameResult.FIRST_PLAYER_WON) {
 			if(isFirst)
-				return -1;
-			else 
 				return 1;
+			else 
+				return -1;
 		} else if(result == GameResult.SECOND_PLAYER_WON) {
 			if(isFirst)
-				return 1;
-			else 
 				return -1;
+			else 
+				return 1;
 		}
 		
 		return 0;
@@ -60,11 +61,11 @@ public class TTTEngine implements Engine {
 		this.isFirst = isFirst; 
 		
 		if(isFirst) {
-			tokenMe = GameToken.SECOND_PLAYER;
-			tokenEnemy = GameToken.FIRST_PLAYER;
-		} else {
-			tokenEnemy = GameToken.SECOND_PLAYER;
 			tokenMe = GameToken.FIRST_PLAYER;
+			tokenEnemy = GameToken.SECOND_PLAYER;
+		} else {
+			tokenEnemy = GameToken.FIRST_PLAYER;
+			tokenMe = GameToken.SECOND_PLAYER;
 		}
 		
 		//Reset engine
