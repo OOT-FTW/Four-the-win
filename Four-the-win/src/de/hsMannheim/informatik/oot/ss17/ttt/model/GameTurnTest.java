@@ -21,11 +21,11 @@ public class GameTurnTest {
 		
 		GameTurn southAtFirstLine = new GameTurn(size, 21);
 		assertEquals(CompassDirection.SOUTH, southAtFirstLine.getDirection());
-		assertEquals(1, southAtFirstLine.getLine());
+		assertEquals(10, southAtFirstLine.getLine());
 		
 		GameTurn westAtFirstLine = new GameTurn(size, 31);
 		assertEquals(CompassDirection.WEST, westAtFirstLine.getDirection());
-		assertEquals(1, westAtFirstLine.getLine());
+		assertEquals(10, westAtFirstLine.getLine());
 		
 		GameTurn northAtLastLine = new GameTurn(size, 10);
 		assertEquals(CompassDirection.NORTH, northAtLastLine.getDirection());
@@ -37,16 +37,16 @@ public class GameTurnTest {
 		
 		GameTurn southAtLastLine = new GameTurn(size, 30);
 		assertEquals(CompassDirection.SOUTH, southAtLastLine.getDirection());
-		assertEquals(10, southAtLastLine.getLine());
+		assertEquals(1, southAtLastLine.getLine());
 		
 		GameTurn westAtLastLine = new GameTurn(size, 40);
 		assertEquals(CompassDirection.WEST, westAtLastLine.getDirection());
-		assertEquals(10, westAtLastLine.getLine());
+		assertEquals(1, westAtLastLine.getLine());
 	}
 	
 	@Test
-	public void convertToField() {
-GameBoardSize size = new GameBoardSize(10, 10);
+	public void convertToField1() {
+		GameBoardSize size = new GameBoardSize(10, 10);
 		
 		GameTurn northAtFirstLine = new GameTurn(size, 1);
 		assertEquals(1, northAtFirstLine.getField(size));

@@ -40,6 +40,12 @@ public class GameTurn {
 			if(field <= endField) {
 				this.direction = direction;
 				this.line = field - startField;
+				if (direction == CompassDirection.SOUTH) {
+					this.line = (-this.line + size.getColumns()) + 1;
+				}
+				else if (direction == CompassDirection.WEST) {
+					this.line = (-this.line + size.getRows()) + 1;
+				}
 				break;
 			}
 		}
@@ -69,9 +75,9 @@ public class GameTurn {
 		case EAST:
 			return this.getLine() + size.getColumns();
 		case SOUTH:
-			return this.getLine() + size.getColumns() + size.getRows();
+			return (-this.getLine() + size.getColumns()) + 1 + size.getColumns() + size.getRows();
 		case WEST:
-			return this.getLine() + size.getColumns() + size.getRows() + size.getColumns();
+			return (-this.getLine() + size.getRows()) + 1 + size.getColumns() + size.getRows() + size.getColumns();
 		}
 		assert(false);
 		return 0;
