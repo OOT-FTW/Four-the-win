@@ -59,7 +59,7 @@ public class TTTEngine implements Engine {
 		try {
 			GameTurn nextGameTurn = tttPlayer.getNextTurn(gameBoard);
 			gameBoard.insertToken(nextGameTurn, tokenMe);
-			return nextGameTurn.getField();
+			return nextGameTurn.getField(gameSize);
 		} catch (InvalidTurnException e) {
 			e.printStackTrace();
 		}
