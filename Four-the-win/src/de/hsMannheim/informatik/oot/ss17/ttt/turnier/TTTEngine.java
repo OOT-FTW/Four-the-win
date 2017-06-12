@@ -22,6 +22,8 @@ public class TTTEngine implements Engine {
 	private GameToken tokenEnemy = GameToken.SECOND_PLAYER;
 	private GameToken tokenMe = GameToken.FIRST_PLAYER;
 	
+	private boolean isFirst;
+	
 	public TTTEngine() {
 		gameSize = new GameBoardSize(10,10);
 		tttPlayer = new AIPlayerHard(2, "TTT-KI");
@@ -39,9 +41,15 @@ public class TTTEngine implements Engine {
 		if(result == GameResult.DRAW) {
 			return 0;
 		} else if(result == GameResult.FIRST_PLAYER_WON) {
-			return 1;
+			if(isFirst)
+				return -1;
+			else 
+				return 1;
 		} else if(result == GameResult.SECOND_PLAYER_WON) {
-			return -1;
+			if(isFirst)
+				return 1;
+			else 
+				return -1;
 		}
 		
 		return 0;
@@ -49,6 +57,8 @@ public class TTTEngine implements Engine {
 
 	@Override
 	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst; 
+		
 		if(isFirst) {
 			tokenMe = GameToken.SECOND_PLAYER;
 			tokenEnemy = GameToken.FIRST_PLAYER;

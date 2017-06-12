@@ -16,7 +16,15 @@ public class AIPlayerNormal implements Player {
 	@Override
 	public GameTurn getNextTurn(GameBoard board) throws InvalidTurnException {
 		// TODO AI algorithm here
-		throw new InvalidTurnException("Not yet implemented.", null, -1);
+		//throw new InvalidTurnException("Not yet implemented.", null, -1);
+		
+		try {
+			Thread.sleep(9000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new GameTurn(new GameBoardSize(10, 10), 1);
 	}
 
 }
