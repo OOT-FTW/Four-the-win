@@ -9,6 +9,7 @@ import de.hsMannheim.informatik.oot.ss17.ttt.model.GameTurn;
 import de.hsMannheim.informatik.oot.ss17.ttt.model.InvalidTurnException;
 import de.hsMannheim.informatik.oot.ss17.ttt.model.Player;
 import de.hsMannheim.informatik.oot.ss17.ttt.view.GameBoardPrinter;
+import ftw.turnier.Engine;
 
 public class TTTEngine implements Engine {
 

@@ -1,6 +1,8 @@
 package de.hsMannheim.informatik.oot.ss17.ttt.turnier;
 
 import java.util.Scanner;
+import ftw.turnier.*;
+import ftw.turnier.Engine;
 
 /**
  * Die Turnierklasse implementiert die beiden gegeneinander antretenden KIs und zählt die Gewinne.
@@ -11,8 +13,8 @@ import java.util.Scanner;
  *
  */
 public class TurnierTeamTTT {
-	private static final String TEAM_1 = "MindMaze";
-	private static final String TEAM_2 = "Tornado Tag";
+	private static final String TEAM_1 = "Bravo Team";
+	private static final String TEAM_2 = "Tornado Tag Team";
 
 	private static final int MAX_TIME_FOR_TURN = 10000; //ms
 
@@ -40,7 +42,7 @@ public class TurnierTeamTTT {
 	};
 
 	//Implementiere KIs
-	private static Engine team1Ki = new TTTEngine(); //TODO change to enemy engine
+	private static Engine team1Ki = new BravoTeamEngine(); //TODO change to enemy engine
 	private static Engine team2Ki = new TTTEngine();
 	//Diese KI gibt das Board aus, dass es einheitlich bleibt
 	private static Engine printOnlyThisBoardWhilePlaying = team1Ki;
