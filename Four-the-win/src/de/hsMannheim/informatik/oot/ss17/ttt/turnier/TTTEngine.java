@@ -27,7 +27,6 @@ public class TTTEngine implements Engine {
 	
 	public TTTEngine() {
 		gameSize = new GameBoardSize(10,10);
-		tttPlayer = new AIPlayerHard(2, "TTT-KI");
 	}
 	
 	@Override
@@ -63,9 +62,11 @@ public class TTTEngine implements Engine {
 		if(isFirst) {
 			tokenMe = GameToken.FIRST_PLAYER;
 			tokenEnemy = GameToken.SECOND_PLAYER;
+			tttPlayer = new AIPlayerHard(1, "TTT-KI");
 		} else {
 			tokenEnemy = GameToken.FIRST_PLAYER;
 			tokenMe = GameToken.SECOND_PLAYER;
+			tttPlayer = new AIPlayerHard(2, "TTT-KI");
 		}
 		
 		//Reset engine
