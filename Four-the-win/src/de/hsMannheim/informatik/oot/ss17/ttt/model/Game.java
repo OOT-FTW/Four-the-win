@@ -28,7 +28,9 @@ public class Game {
 			
 			boolean validInput = false;
 			System.out.println("Spieler \"" + getCurrentPlayer().getName() + "\" ist am Zug.");
-			if(getCurrentPlayer() instanceof AIPlayerHard) {
+			if(getCurrentPlayer() instanceof AIPlayerHard ||
+				getCurrentPlayer() instanceof AIPlayerNormal ||
+				getCurrentPlayer() instanceof AIPlayerEasy) {
 				System.out.println(" Bitte auf den Zug des Computers warten.");
 			}
 			else {
@@ -60,6 +62,10 @@ public class Game {
 	private void executeNextTurn() throws InvalidTurnException {
 		GameTurn nextTurn = getCurrentPlayer().getNextTurn(board);
 		
+		executeNextTurn(nextTurn);
+	}
+	
+	public void executeNextTurn(GameTurn nextTurn) throws InvalidTurnException {
 		GameToken token;
 		if(currentPlayerID == 0) {
 			token = GameToken.FIRST_PLAYER;
@@ -72,7 +78,6 @@ public class Game {
 			board.insertToken(nextTurn.getDirection(), nextTurn.getLine(), token);
 		} catch (InvalidTurnException e) {
 			System.out.println(e.getMessage());
-			// TODO Loggen
 		}
 	}
 	
