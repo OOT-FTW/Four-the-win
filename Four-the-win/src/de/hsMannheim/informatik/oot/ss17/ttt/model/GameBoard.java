@@ -602,4 +602,31 @@ public class GameBoard {
 		return GameResult.NONE;
 	}
 	
+	public GameTurn createGameTurn(int input) throws InvalidTurnException {
+		GameTurn turn;
+		
+		if(input > 0 && input <= this.getColumns()) {
+			turn = new GameTurn(CompassDirection.NORTH, input);
+		}
+		else if(input > this.getColumns() && input <= this.getColumns() + this.getRows()) {
+			turn = new GameTurn(CompassDirection.EAST, input - this.getColumns());
+		}
+		else if(input > this.getColumns() + this.getRows() && input <= 2 * this.getColumns() + this.getRows()) {
+			turn = new GameTurn(CompassDirection.SOUTH, this.getColumns() - (input - this.getColumns() - this.getRows()) + 1);
+		}
+		else if(input > 2 * this.getColumns() + this.getRows() && input <= 2 * this.getColumns() + 2 * this.getRows()) {
+			turn = new GameTurn(CompassDirection.WEST, this.getRows() - (input - 2 * this.getColumns() - this.getRows()) + 1);
+		}
+		else {
+			throw new InvalidTurnException("Die Eingabe ist ungültig. Sie muss zwischen 1 und " + (2 * this.getColumns() + 2 * this.getRows()) + " (inklusive) liegen.");
+		}
+
+		if(turn == null || !this.canInsert(turn.getDirection(), turn.getLine())) {
+			throw new InvalidTurnException("Die Eingabe ist ungültig, da der Stein an dieser Stelle nicht eingefügt werden kann.");
+		}
+		else {
+			return turn;
+		}
+	}
+	
 }

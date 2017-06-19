@@ -67,7 +67,7 @@ public class AIPlayerHard implements Player {
 				start = GameToken.FIRST_PLAYER;
 			}
 			
-			(threads[i] = new HardAIThread(i, this, board, start, SEARCH_DEPTH, nextTurns[i])).start();
+			(threads[i] = new AIThread(i, this, board, start, SEARCH_DEPTH, nextTurns[i])).start();
 		}
 		
 		// Wait for the calculating threads to end
@@ -133,7 +133,7 @@ public class AIPlayerHard implements Player {
 	 * @param index Index of the game rated game turn.
 	 * @param value Rating of the game turn.
 	 * 
-	 * @see HardAIThread.class
+	 * @see AIThread.class
 	 */
 	public synchronized void setTurnRating(int index, int value) {
 		ratings[index] = value;

@@ -3,156 +3,187 @@ package de.hsMannheim.informatik.oot.ss17.ttt.view;
 import de.hsMannheim.informatik.oot.ss17.ttt.model.*;
 
 public class GameBoardPrinter {
-
-	private static final int offset = 2;
+	
 	private static final char symbolFirstPlayer = 'O', symbolSecondPlayer = 'X';
-	private GameBoard board;
-	
-	/**
-	 * Creates a new GameBoardPrinter for a specific board.
-	 * @param board
-	 */
-	public GameBoardPrinter(GameBoard board) {
-		this.board = board;
-	}
-	
-	/**
-	 * Prints the current state of the board on the console and displays the input
-	 * possibilities like ordered by the customer.
-	 */
-	public void print() {
-		if(board == null) {
-			// TODO log event
-			System.out.println("Field not initialized.");
-			return;
-		}		
-		
-		int columns = board.getColumns();
-		int rows = board.getRows();
-		
-		if(Math.min(rows, columns) < 6 || Math.max(rows, columns) < 7) {
-			// TODO log event
-			System.out.println("Field not properly initialized.");;
-		}
+    private GameBoard board;
+    private int rows, columns;
+    private int numberOfInserts;
+    private String[][] skeleton;
+    
+    /**
+     * Creates a new GameBoardPrinter for a specific board.
+     * @param board
+     */
+    public GameBoardPrinter(GameBoard board) {
+        this.board = board;
+        this.rows = board.getRows();
+        this.columns = board.getColumns();
+        this.numberOfInserts = 2 * this.rows + 2 * this.columns;
+        this.skeleton = new String[2 * rows + 1][2 * columns + 1];
+    }
 
-		System.out.println();
-		System.out.println("Spielfeld:");
-		System.out.println();
-		
-		// Print north (N)
-		for(int i = 0; i < ((2 * offset) + columns) * 3; i++) {
-			if((i - offset) == (columns + 2 + columns / 2)) {
-				System.out.print("N");
-			}
-			else {
-				System.out.print(" ");
-			}
-			
-		}
-		System.out.println(); // End of line
-		
-		// Print upper column count
-		System.out.print("  +   ");
-		for(int i = 1; i <= columns; i++) {
-			if(i < 10) {
-				System.out.print(" " + i + " ");
-			}
-			else {
-				System.out.print(i + " ");
-			}
-		}
-		System.out.print( "   +  ");
-		System.out.println(); // End of line
-		System.out.println();
-		
-		// Print field
-		for(int row = 0; row < rows; row++) {
-			if(row == (rows / 2)) {
-				System.out.print("W ");
-			}
-			else {
-				System.out.print("  ");
-			}
-			
-			// Left row number
-			System.out.print(((rows - row) + 2 * columns + rows) + "  ");
-			
-			// Tokens
-			for(int column = 0; column < columns; column++) {
-				System.out.print(" ");
-				if(board.getTokenAt(row, column).equals(GameToken.FIRST_PLAYER)) {
-					System.out.print(symbolFirstPlayer);
-				}
-				else if (board.getTokenAt(row, column).equals(GameToken.SECOND_PLAYER)) {
-					System.out.print(symbolSecondPlayer);
-				}
-				else {
-					System.out.print(" ");
-				}
-				System.out.print(" ");
-			}
-			
-			if((row + 1 + columns) < 10) {
-				System.out.print(" ");
-			}
-			System.out.print("  " + (row + 1 + columns)); // Print right row count
-			
-			if(row == (rows / 2)) {
-				System.out.print(" O");
-			}
-			else {
-				System.out.print("  ");
-			}
-
-			System.out.println(); // End of line
-			System.out.println();	// Free line
-		}
-		
-		// Print lower column count
-		System.out.print("  +   ");
-		for(int column = 1; column <= columns; column++) {
-			if(((columns - column) + columns + rows + 1) < 10) {
-				System.out.print(" " + ((columns - column) + columns + rows + 1) + " ");
-			}
-			else {
-				System.out.print(((columns - column) + columns + rows + 1) + " ");
-			}
-		}
-		System.out.print("   +  ");
-		System.out.println(); // End of line
-		
-		// Print south (S)
-		for(int i = 0; i < ((2 * offset) + columns) * 2; i++) {
-			if((i - offset) == (columns + 1 + columns / 2)) {
-				System.out.print("S");
-			}
-			else {
-				System.out.print(" ");
-			}
-
-		}
-		System.out.println(""); // End of line
-	}
-
-	/**
-	 * Prints on the console that the game has ended. If one player won the winner is displayed,
-	 * otherwise the end in a draw is displayed.
-	 * @param result The result of the game.
-	 * @param winner The player that won the game.
-	 */
-	public void printWinner(GameResult result, Player winner) {
-		System.out.println("Das Spiel ist beendet.");
-		if(result == null) {
-			System.out.println("Es konnte kein Gewinner festgestellt werden.");
-		}
-		else if(result.equals(GameResult.DRAW)) {
-			System.out.println("Das Spiel ist unentschieden ausgegangen.");
-		}
-		else if(result.equals(GameResult.NONE)) {
-			System.out.println("Kein Spieler hat gewonnen.");
-		}
-		else if(result.equals(GameResult.FIRST_PLAYER_WON) || result.equals(GameResult.SECOND_PLAYER_WON)) {
-			System.out.println("Spieler \"" + winner.getName() + "\" hat gewonnen.");
-		}
-	}
+    private String[][] initSkeleton(int offset) {
+        if (offset == 0) {
+            for (int i = 0; i < skeleton.length; i++) {
+                for (int j = 0; j < skeleton[0].length; j++) {
+                    if (j % 2 == 0) {
+                        skeleton[i][j] = "|";
+                    }
+                    if (i % 2 == 0 && skeleton[i][j] != "|") {
+                        skeleton[i][j] = "––";
+                    }
+                    if (i % 2 != 0 && j % 2 != 0) {
+                        skeleton[i][j] = "  ";
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < skeleton.length; i++) {
+                for (int j = 0; j < skeleton[0].length; j++) {
+                    if (j % 2 == 0) {
+                        skeleton[i][j] = "|";
+                    }
+                    if (i % 2 == 0 && skeleton[i][j] != "|") {
+                        skeleton[i][j] = "–––";
+                    }
+                    if (i % 2 != 0 && j % 2 != 0) {
+                        skeleton[i][j] = "   ";
+                    }
+                }
+            }
+        }
+        skeleton[0][0] = "+";
+        skeleton[0][skeleton[0].length - 1] = "+";
+        skeleton[skeleton.length - 1][0] = "+";
+        skeleton[skeleton.length - 1][skeleton[0].length - 1] = "+";
+        return skeleton;
+    }
+    
+    /**
+     * Prints the game board to the console.
+     */
+    public void print() {
+        if (board == null) {
+            System.out.println("Field not initialized.");
+            return;
+        }
+        if (Math.min(rows, columns) < 6 || Math.max(rows, columns) < 7 ||
+        	Math.max(rows, columns) > 13 || Math.min(rows, columns) > 11 ) {
+            System.out.println("Field not properly initialized.");
+        }
+        
+            initSkeleton(1);
+        
+        System.out.println();
+        System.out.println("Spielfeld:");
+        System.out.println();
+        
+        // fill board:
+        for(int i=0; i<rows; i++){
+        	for(int j=0; j<columns;j++){
+        		if(board.getTokenAt(i, j).equals(GameToken.FIRST_PLAYER)){
+        			skeleton[2*i+1][2*j+1] = " "+symbolFirstPlayer+" ";
+        		}else if(board.getTokenAt(i, j).equals(GameToken.SECOND_PLAYER)){
+        			skeleton[2*i+1][2*j+1] = " "+symbolSecondPlayer+" ";
+        		}else{
+        			skeleton[2*i+1][2*j+1] = "   ";
+        		}
+        	}
+        }
+        
+        // create left and right numeration
+        String[] left = new String[rows];
+        String[] right = new String[rows];
+        for (int i = 0; i < rows; i++) {
+            left[i] = (numberOfInserts - i) + "";
+            if((rows + (i+1))<10){
+            right[i] = "0"+(rows + (i + 1)) + "";
+            }else{
+                right[i] =(rows + (i + 1)) + "";
+            }
+            
+        }
+        
+        // print top level numeration:
+        System.out.print("   ");
+        for (int i = 0; i < rows; i++) {
+            if (i + 1 < 10 && numberOfInserts < 100) {
+                System.out.print(" 0" + (i + 1) + " ");
+            } else if (i + 1 < 10 && numberOfInserts >= 100) {
+                System.out.print(" 00" + (i + 1) + " ");
+            } else if( i+1 >= 10 && numberOfInserts <100){
+                System.out.print(" "+(i + 1)+" ");
+            } else{
+                System.out.print(" 0"+(i+1)+" ");
+            }
+        }
+        
+        // print board and left and right numeration
+        System.out.println();
+        if (numberOfInserts < 100) {
+            int h = 0;
+            for (int i = 0; i < skeleton.length; i++) {
+                if (i % 2 != 0) {
+                    System.out.print(left[h]);
+                    for (int j = 0; j < skeleton[0].length; j++) {
+                        System.out.print(skeleton[i][j]);
+                    }
+                    System.out.print(right[h]);
+                    System.out.println();
+                    h++;
+                } else {
+                    System.out.print("  ");
+                    for (int j = 0; j < skeleton[0].length; j++) {
+                        System.out.print(skeleton[i][j]);
+                    }
+                    System.out.print("  ");
+                    System.out.println();
+                }
+            }
+        } else {
+            int h = 0;
+            for (int i = 0; i < skeleton.length; i++) {
+                if (i % 2 != 0) {
+                    System.out.print(left[h]);
+                    for (int j = 0; j < skeleton[0].length; j++) {
+                        System.out.print(skeleton[i][j]);
+                    }
+                    System.out.print(right[h]);
+                    System.out.println();
+                    h++;
+                } else {
+                    System.out.print("   ");
+                    for (int j = 0; j < skeleton[0].length; j++) {
+                        System.out.print(skeleton[i][j]);
+                    }
+                    System.out.print("   ");
+                    System.out.println();
+                }
+            }
+        }
+        
+        // print bottom level numeration
+        System.out.print("   ");
+        for (int i = 0; i < rows; i++) {
+            System.out.print(" "+(numberOfInserts - columns - i)+" ");
+        }
+        System.out.println("\n");
+        
+        
+        
+    }
+    
+    public void printWinner(GameResult result, Player winner) {
+        System.out.println("Das Spiel ist beendet.");
+        if (result == null) {
+            System.out.println("Es konnte kein Gewinner festgestellt werden.");
+        } else if (result.equals(GameResult.DRAW)) {
+            System.out.println("Das Spiel ist unentschieden ausgegangen.");
+        } else if (result.equals(GameResult.NONE)) {
+            System.out.println("Kein Spieler hat gewonnen.");
+        } else if (result.equals(GameResult.FIRST_PLAYER_WON) || result.equals(GameResult.SECOND_PLAYER_WON)) {
+            System.out.println("Spieler \"" + winner.getName() + "\" hat gewonnen.");
+        }
+    }
 }
+

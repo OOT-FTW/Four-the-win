@@ -6,11 +6,12 @@ import java.util.ArrayList;
  * The current implementation of this class uses an integer array as an
  * internal representation of the game board to increase performance.
  */
-public class HardAIThread extends Thread {
+public class AIThread extends Thread {
 
 	private static final int NONE = 0, FIRST_PLAYER = 1, SECOND_PLAYER = 2;
 	private int index, maxLevel;
-	private AIPlayerHard ai;
+	private AIPlayerHard aiHard;
+	private AIPlayerNormal aiNormal;
 	private int[][] board;
 	private GameToken playerToken, maxPlayer, minPlayer;
 	private GameTurn initialTurn;
@@ -24,11 +25,11 @@ public class HardAIThread extends Thread {
 	 * @param maxLevel The limit of the depth search.
 	 * @param initialTurn The game turn that is executed initially.
 	 */
-	public HardAIThread(int index, AIPlayerHard player, GameBoard board,
+	public AIThread(int index, AIPlayerHard player, GameBoard board,
 						GameToken playerToken, int maxLevel, GameTurn initialTurn) {
 		this.setPriority(MAX_PRIORITY);
 		this.index = index;
-		this.ai = player;
+		this.aiHard = player;
 
 		// Convert GameBoard object to int[][] array to increase performance
 		this.board = new int[board.getRows()][board.getColumns()];
@@ -56,6 +57,12 @@ public class HardAIThread extends Thread {
 		}
 	}
 	
+	public AIThread(int index, AIPlayerNormal player, GameBoard board,
+			GameToken playerToken, int maxLevel, GameTurn initialTurn) {
+		this(index, (AIPlayerHard)null, board, playerToken, maxLevel, initialTurn);
+		this.aiNormal = player;
+	}
+	
 	/**
 	 * Executes the depth search for the best turn and writes the rating back to the AI player.
 	 */
@@ -70,7 +77,12 @@ public class HardAIThread extends Thread {
 		}
 		
 		// "Return" the calculated value to the caller AI
-		ai.setTurnRating(index, rating);
+		if(aiHard != null) {
+			aiHard.setTurnRating(index, rating);
+		}
+		if(aiNormal != null) {
+			aiNormal.setTurnRating(index, rating);
+		}
 	}
 	
 	/**
