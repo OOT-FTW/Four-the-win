@@ -19,7 +19,7 @@ public class GameBoardPrinter {
         this.rows = board.getRows();
         this.columns = board.getColumns();
         this.numberOfInserts = 2 * this.rows + 2 * this.columns;
-        this.skeleton = new String[2 * rows + 1][2 * columns + 1];
+        this.skeleton = new String[2 * columns + 1][2 * rows + 1];
     }
 
     private String[][] initSkeleton(int offset) {
@@ -82,24 +82,24 @@ public class GameBoardPrinter {
         for(int i=0; i<rows; i++){
         	for(int j=0; j<columns;j++){
         		if(board.getTokenAt(i, j).equals(GameToken.FIRST_PLAYER)){
-        			skeleton[2*i+1][2*j+1] = " "+symbolFirstPlayer+" ";
+        			skeleton[2*j+1][2*i+1] = " "+symbolFirstPlayer+" ";
         		}else if(board.getTokenAt(i, j).equals(GameToken.SECOND_PLAYER)){
-        			skeleton[2*i+1][2*j+1] = " "+symbolSecondPlayer+" ";
+        			skeleton[2*j+1][2*i+1] = " "+symbolSecondPlayer+" ";
         		}else{
-        			skeleton[2*i+1][2*j+1] = "   ";
+        			skeleton[2*j+1][2*i+1] = "   ";
         		}
         	}
         }
         
         // create left and right numeration
-        String[] left = new String[rows];
-        String[] right = new String[rows];
-        for (int i = 0; i < rows; i++) {
+        String[] left = new String[columns];
+        String[] right = new String[columns];
+        for (int i = 0; i < columns; i++) {
             left[i] = (numberOfInserts - i) + "";
-            if((rows + (i+1))<10){
-            right[i] = "0"+(rows + (i + 1)) + "";
+            if((columns + (i+1))<10){
+            right[i] = "0"+(columns + (i + 1)) + "";
             }else{
-                right[i] =(rows + (i + 1)) + "";
+                right[i] =(columns + (i + 1)) + "";
             }
             
         }
@@ -165,7 +165,7 @@ public class GameBoardPrinter {
         // print bottom level numeration
         System.out.print("   ");
         for (int i = 0; i < rows; i++) {
-            System.out.print(" "+(numberOfInserts - columns - i)+" ");
+            System.out.print(" "+(numberOfInserts - rows - i)+" ");
         }
         System.out.println("\n");
         
