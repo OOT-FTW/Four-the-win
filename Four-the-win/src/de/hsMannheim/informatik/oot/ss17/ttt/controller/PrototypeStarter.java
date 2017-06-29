@@ -22,7 +22,7 @@ public class PrototypeStarter {
 		// Initiate field
 		readFieldMeasurements();
 		
-		Game game = new Game(new LocalPlayer("Player1"), new LocalPlayer("Player2"), new GameBoard(new GameBoardSize(width, height)));
+		Game game = new Game(new LocalPlayer("Player1", 1), new LocalPlayer("Player2", 2), new GameBoard(new GameBoardSize(width, height)));
 		game.play();
 	}
 	

@@ -23,20 +23,20 @@ public class StarterSimple {
 	}
 	
 	private static void startPvP(int rows, int columns) {
-		new Game(new LocalPlayer("Player1"), new LocalPlayer("Player2"), new GameBoard(new GameBoardSize(rows, columns))).play();
+		new Game(new LocalPlayer("Player1", 1), new LocalPlayer("Player2", 2), new GameBoard(new GameBoardSize(rows, columns))).play();
 	}
 	
 	private static void startHardAI(int rows, int columns) {
-		new Game(new LocalPlayer("Player1"), new AIPlayerHard(2, "KI"), new GameBoard(new GameBoardSize(rows, columns))).play();
+		new Game(new LocalPlayer("Player1", 1), new AIPlayerHard(2, "KI"), new GameBoard(new GameBoardSize(rows, columns))).play();
 	}
 	
 	private static void startEasyAI(int rows, int columns) {
-		new Game(new LocalPlayer("Player1"), new AIPlayerEasy("KI"), new GameBoard(new GameBoardSize(rows, columns))).play();
+		new Game(new LocalPlayer("Player1", 1), new AIPlayerEasy("KI"), new GameBoard(new GameBoardSize(rows, columns))).play();
 	}
 	
 	private static void startWithFile(String path) {
 		try {
-			new Game(new LocalPlayer("Player1"), new LocalPlayer("Player2"), new GameBoard(path)).play();
+			new Game(new LocalPlayer("Player1", 1), new LocalPlayer("Player2", 2), new GameBoard(path)).play();
 		}
 		catch (InvalidBoardException e) {
 			System.out.println("Beim Einlesen der Datei ist ein Fehler aufgetreten.");
